@@ -3,11 +3,14 @@ import contentInfoTpl from './templates/contentInfo.hbs';
 import contentListTpl from './templates/contentList.hbs';
 import Api from './fetchCountries';
 
+import debounce from "lodash.debounce";
+
 import { info, error } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css' ;
 
-var debounce = require('lodash.debounce');
+
+// var debounce = require('lodash.debounce');
 const cardContainerEl = document.querySelector('.js-card-container');
 const searchInputEl = document.querySelector('.js-search-input');
 
@@ -26,21 +29,22 @@ Api.fetchCountries(searchQuery).then(markupType).catch(console.error());
 }
 
 function markupType(value) {
+    clearArticleContain();
     if (value.length > 10) {
-        clearArticleContain();
+        // clearArticleContain();
         messageError(info, 'Too many matches found. Please enter a more specific query!');
         return;
     }
     else if (value.length > 1 && value.length <= 10) {
-        clearArticleContain();
+        // clearArticleContain();
         renderCountryCard(contentListTpl, value);
     }
     else if (value.length === 1) {
-        clearArticleContain();
+        // clearArticleContain();
         renderCountryCard(contentInfoTpl, value[0]);
         return;
     } else {
-        clearArticleContain();
+        // clearArticleContain();
         messageError(info, 'I cannot find such a country');
     }
     
